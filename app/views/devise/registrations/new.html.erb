@@ -81,9 +81,8 @@ document.getElementById('user_province').addEventListener('change', function() {
     .then(data => {
       cityMunicipalitySelect.innerHTML = '';
 
-      // Check if the response data is an array
       if (Array.isArray(data)) {
-        // Iterate over the array and add options to the select element
+      
         data.forEach(city => {
           var option = document.createElement('option');
           option.value = city.code;
@@ -96,24 +95,34 @@ document.getElementById('user_province').addEventListener('change', function() {
     })
     .catch(error => console.error('Error fetching cities/municipalities:', error));
 });
-
-    document.getElementById('city_municipality_select').addEventListener('change', function() {
-      var selectedCityMunicipality = this.value;
-      var barangaySelect = document.getElementById('barangay_select');
-      console.log(selectedCityMunicipality)
-      fetch(`https://psgc.gitlab.io/api/psgc/fetch_barangays/${selectedCityMunicipality}`)
-        .then(response => response.json())
-        .then(data => {
+//-----------------------------
+document.getElementById('city_municipality_select').addEventListener('change', function() {
+  var selectedCityMunicipality = this.value;
+  var barangaySelect = document.getElementById('barangay_select');
+  console.log(selectedCityMunicipality);
+  fetch(`https://psgc.gitlab.io/api/cities-municipalities/${selectedCityMunicipality}/barangays`)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(data => {
           barangaySelect.innerHTML = '';
-         
-          data['data'].forEach(city => {
-            var option = document.createElement('option');
-            option.value = city.code;
-            option.text = city.name;
-            barangaySelect.add(option);
-          });
-        })
-        .catch(error => console.error('Error fetching barangays', error));
-    });
+          // Check if the response data is an array
+          if (Array.isArray(data)) {
+              // Iterate over the array and add options to the select element
+              data.forEach(barangay => {
+                  var option = document.createElement('option');
+                  option.value = barangay.code;
+                  option.text = barangay.name;
+                  barangaySelect.add(option);
+              });
+          } else {
+              console.error('Error fetching barangays: Data is not in the expected format');
+          }
+      })
+  .catch(error => console.error('Error fetching barangays:', error));
+});
 
-  </script>
+</script>
