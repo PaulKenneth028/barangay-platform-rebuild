@@ -71,7 +71,7 @@
       var selectedProvince = this.value;
       var cityMunicipalitySelect = document.getElementById('city_municipality_select');
       console.log(selectedProvince)
-      fetch(`https://psgc.gitlab.io/api/provinces/{provinceCode}/cities-municipalities/`)
+      fetch(`https://psgc.gitlab.io/api/provinces/${selectedProvince}/cities-municipalities/`)
         .then(response => response.json())
         .then(data => {
           cityMunicipalitySelect.innerHTML = '';
