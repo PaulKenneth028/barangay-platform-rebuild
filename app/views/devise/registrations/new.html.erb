@@ -72,7 +72,12 @@ document.getElementById('user_province').addEventListener('change', function() {
   var cityMunicipalitySelect = document.getElementById('city_municipality_select');
   console.log(selectedProvince)
   fetch(`https://psgc.gitlab.io/api/provinces/${selectedProvince}/cities-municipalities/`)
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
     .then(data => {
       cityMunicipalitySelect.innerHTML = '';
       // Check if data['data'] exists and is an array
