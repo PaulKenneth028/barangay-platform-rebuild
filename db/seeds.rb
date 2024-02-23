@@ -8,14 +8,14 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-User.create!(
+admin_user = User.create!(
   first_name: "Admin",
-  last_name: "Admin",
-  email: "admin@example.com",
-  complete_address: "Brgy Hall",
+  last_name: "User",
+  email: "admin2@example.com",
+  complete_address: "Admin Address",
   province: "Samar",
-  city_municipality: "Sto niño",
-  contact_number: "09060000003",
+  city_municipality: "Santo Niño",
+  contact_number: "01234567890",
   barangay: "Ilijan",
   role: :admin,
   status: :approved,

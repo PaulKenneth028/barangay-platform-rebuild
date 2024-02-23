@@ -35,7 +35,7 @@ class Admin::ResidentsController < ApplicationController
       @user = User.new(resident_params)
       if @user.save
         redirect_to admin_residents_path, notice: "Resident's account was successfully created."
-        UserMailer.approved_email(@user).deliver_later
+        # UserMailer.approved_email(@user).deliver_later
       else
         render :new, status: :unprocessable_entity
       end
