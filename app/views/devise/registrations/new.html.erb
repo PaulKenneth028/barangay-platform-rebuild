@@ -67,24 +67,28 @@
   <!--<%= render "devise/shared/links" %>-->
 </div>
 <script>
-    document.getElementById('user_province').addEventListener('change', function() {
-      var selectedProvince = this.value;
-      var cityMunicipalitySelect = document.getElementById('city_municipality_select');
-      console.log(selectedProvince)
-      fetch(`https://psgc.gitlab.io/api/provinces/${selectedProvince}/cities-municipalities/`)
-        .then(response => response.json())
-        .then(data => {
-          cityMunicipalitySelect.innerHTML = '';
-         
-          data['data'].forEach(city => {
-            var option = document.createElement('option');
-            option.value = city.code;
-            option.text = city.name;
-            cityMunicipalitySelect.add(option);
-          });
-        })
-        .catch(error => console.error('Error fetching cities/municipalities:', error));
-    });
+document.getElementById('user_province').addEventListener('change', function() {
+  var selectedProvince = this.value;
+  var cityMunicipalitySelect = document.getElementById('city_municipality_select');
+  console.log(selectedProvince)
+  fetch(`https://psgc.gitlab.io/api/provinces/${selectedProvince}/cities-municipalities/`)
+    .then(response => response.json())
+    .then(data => {
+      cityMunicipalitySelect.innerHTML = '';
+      // Check if data['data'] exists and is an array
+      if (Array.isArray(data['data'])) {
+        data['data'].forEach(city => {
+          var option = document.createElement('option');
+          option.value = city.code;
+          option.text = city.name;
+          cityMunicipalitySelect.add(option);
+        });
+      } else {
+        console.error('Error fetching cities/municipalities: Data is not in the expected format');
+      }
+    })
+    .catch(error => console.error('Error fetching cities/municipalities:', error));
+});
 
     document.getElementById('city_municipality_select').addEventListener('change', function() {
       var selectedCityMunicipality = this.value;
