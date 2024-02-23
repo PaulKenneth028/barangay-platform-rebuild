@@ -70,7 +70,7 @@
 document.getElementById('user_province').addEventListener('change', function() {
   var selectedProvince = this.value;
   var cityMunicipalitySelect = document.getElementById('city_municipality_select');
-  console.log(selectedProvince)
+  
   fetch(`https://psgc.gitlab.io/api/provinces/${selectedProvince}/cities-municipalities/`)
     .then(response => {
       if (!response.ok) {
@@ -79,11 +79,12 @@ document.getElementById('user_province').addEventListener('change', function() {
       return response.json();
     })
     .then(data => {
-      console.log(data)
       cityMunicipalitySelect.innerHTML = '';
-      // Check if data['data'] exists and is an array
-      if (Array.isArray(data['data'])) {
-        data['data'].forEach(city => {
+
+      // Check if the response data is an array
+      if (Array.isArray(data)) {
+        // Iterate over the array and add options to the select element
+        data.forEach(city => {
           var option = document.createElement('option');
           option.value = city.code;
           option.text = city.name;
