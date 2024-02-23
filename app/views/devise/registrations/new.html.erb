@@ -111,7 +111,8 @@ document.getElementById('city_municipality_select').addEventListener('change', f
           barangaySelect.innerHTML = '';
           // Check if the response data is an array
           if (Array.isArray(data)) {
-              // Iterate over the array and add options to the select element
+
+          
               data.forEach(barangay => {
                   var option = document.createElement('option');
                   option.value = barangay.code;
