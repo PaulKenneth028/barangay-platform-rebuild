@@ -79,6 +79,7 @@ document.getElementById('user_province').addEventListener('change', function() {
       return response.json();
     })
     .then(data => {
+      console.log(data)
       cityMunicipalitySelect.innerHTML = '';
       // Check if data['data'] exists and is an array
       if (Array.isArray(data['data'])) {
