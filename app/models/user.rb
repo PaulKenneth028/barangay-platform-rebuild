@@ -23,6 +23,8 @@ class User < ApplicationRecord
   private
 
   def send_status_email
+    UserMailer.registration_confirmation(self).deliver_later
+
     if status == 'pending'
       UserMailer.pending_email(self).deliver_later
     end
